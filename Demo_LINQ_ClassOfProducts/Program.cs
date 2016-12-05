@@ -25,9 +25,15 @@ namespace Demo_LINQ_ClassOfProducts
             // Write the following methods
             //
 
-            // List the names of all products with less than 10 units in stock.
+            // List the names and units of all products with less than 10 units in stock. Order by units.
 
-            // 
+            // List all products with a unit price less than $10. Order by price.
+
+            // List the most expensive Seafood. Consider there may be more than one.
+
+            // List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
+
+            // List all products with names that start with "S" and calculate the average of the units in stock.
         }
 
         private static List<Product> InitializeProductList()
