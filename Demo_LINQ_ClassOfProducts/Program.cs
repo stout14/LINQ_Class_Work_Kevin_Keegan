@@ -157,13 +157,18 @@ namespace Demo_LINQ_ClassOfProducts
                     Price = product.UnitPrice
                 };
 
+            decimal average = products.Average(p => p.UnitPrice);
+
             Console.WriteLine("\tProduct Name \t\tProduct Price");
-            Console.WriteLine("\t-------- \t\t------------");
+            Console.WriteLine("\t------------ \t\t-------------");
 
             foreach (var product in sortedProducts)
             {
-                Console.WriteLine($"\t{product.Name.PadRight(20)} \t{product.Price}");
+                Console.WriteLine($"\t{product.Name.PadRight(20)} \t{product.Price.ToString("C2").PadLeft(10)}");
             }
+
+            Console.WriteLine();
+            Console.WriteLine($"\tAverage Price: \t\t{average.ToString("C2").PadLeft(10)}");
 
             Console.ReadKey();
         }
