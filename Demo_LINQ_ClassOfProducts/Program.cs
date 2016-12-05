@@ -18,6 +18,16 @@ namespace Demo_LINQ_ClassOfProducts
             List<Product> productLIst = InitializeProductList();
 
             OrderByCatagory(productLIst);
+
+            OrderByCatagoryAnoymous(productLIst);
+
+            //
+            // Write the following methods
+            //
+
+            // List the names of all products with less than 10 units in stock.
+
+            // 
         }
 
         private static List<Product> InitializeProductList()
@@ -109,15 +119,50 @@ namespace Demo_LINQ_ClassOfProducts
 
         private static void OrderByCatagory(List<Product> products)
         {
+            Console.Clear();
+            Console.WriteLine("List all beverages and sort by the unit price.");
+            Console.WriteLine();
+
             var sortedProducts =
                 from product in products
                 where product.Category == "Beverages"
                 orderby product.Category, product.UnitPrice descending
                 select product;
 
+            Console.WriteLine("\tCategory \tProduct Name");
+            Console.WriteLine("\t-------- \t------------");
+
             foreach (Product product in sortedProducts)
             {
-                Console.WriteLine(product.Category + " " + product.ProductName);
+                Console.WriteLine($"\t{product.Category} \t{product.ProductName}");
+            }
+
+            Console.ReadKey();
+        }
+
+        private static void OrderByCatagoryAnoymous(List<Product> products)
+        {
+            Console.Clear();
+            Console.WriteLine("List all beverages that cost more the $15 and sort by the unit price.");
+            Console.WriteLine();
+
+            var sortedProducts =
+                from product in products
+                where product.Category == "Beverages" &&
+                    product.UnitPrice > 15
+                orderby product.Category, product.UnitPrice descending
+                select new
+                {
+                    Name = product.ProductName,
+                    Price = product.UnitPrice
+                };
+
+            Console.WriteLine("\tProduct Name \t\tProduct Price");
+            Console.WriteLine("\t-------- \t\t------------");
+
+            foreach (var product in sortedProducts)
+            {
+                Console.WriteLine($"\t{product.Name.PadRight(20)} \t{product.Price}");
             }
 
             Console.ReadKey();
