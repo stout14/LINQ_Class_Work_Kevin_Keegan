@@ -17,7 +17,9 @@ namespace Demo_LINQ_ClassOfProducts
     {
         static void Main(string[] args)
         {
-            List<Product> productLIst = InitializeProductList();
+            WriteAllProductsToXml();
+
+            List<Product> productLIst = ReadAllProductsFromXml();
 
             OrderByCatagory(productLIst);
 
@@ -53,7 +55,7 @@ namespace Demo_LINQ_ClassOfProducts
             try
             {
                 StreamWriter streamWriter = new StreamWriter(dataPath);
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Product), new XmlRootAttribute("Products"));
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Product>), new XmlRootAttribute("Products"));
 
                 using (streamWriter)
                 {
@@ -62,7 +64,6 @@ namespace Demo_LINQ_ClassOfProducts
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -79,7 +80,7 @@ namespace Demo_LINQ_ClassOfProducts
             try
             {
                 StreamReader streamReader = new StreamReader(dataPath);
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(Product), new XmlRootAttribute("Products"));
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<Product>), new XmlRootAttribute("Products"));
 
                 using (streamReader)
                 {
@@ -183,8 +184,10 @@ namespace Demo_LINQ_ClassOfProducts
 
         private static void OrderByCatagory(List<Product> products)
         {
+            string TAB = "   ";
+
             Console.Clear();
-            Console.WriteLine("List all beverages and sort by the unit price.");
+            Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
             Console.WriteLine();
 
             var sortedProducts =
@@ -193,21 +196,25 @@ namespace Demo_LINQ_ClassOfProducts
                 orderby product.Category, product.UnitPrice descending
                 select product;
 
-            Console.WriteLine("\tCategory \tProduct Name");
-            Console.WriteLine("\t-------- \t------------");
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
 
             foreach (Product product in sortedProducts)
             {
-                Console.WriteLine($"\t{product.Category} \t{product.ProductName}");
+                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
             }
 
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
 
         private static void OrderByCatagoryAnoymous(List<Product> products)
         {
+            string TAB = "   ";
+
             Console.Clear();
-            Console.WriteLine("List all beverages that cost more the $15 and sort by the unit price.");
+            Console.WriteLine(TAB + "List all beverages that cost more the $15 and sort by the unit price.");
             Console.WriteLine();
 
             var sortedProducts =
@@ -223,17 +230,19 @@ namespace Demo_LINQ_ClassOfProducts
 
             decimal average = products.Average(p => p.UnitPrice);
 
-            Console.WriteLine("\tProduct Name \t\tProduct Price");
-            Console.WriteLine("\t------------ \t\t-------------");
+            Console.WriteLine(TAB + "Product Name".PadRight(20) + "Product Price".PadLeft(15));
+            Console.WriteLine(TAB + "------------".PadRight(20) + "-------------".PadLeft(15));
 
             foreach (var product in sortedProducts)
             {
-                Console.WriteLine($"\t{product.Name.PadRight(20)} \t{product.Price.ToString("C2").PadLeft(10)}");
+                Console.WriteLine(TAB + product.Name.PadRight(20) + product.Price.ToString("C2").PadLeft(15));
             }
 
             Console.WriteLine();
-            Console.WriteLine($"\tAverage Price: \t\t{average.ToString("C2").PadLeft(10)}");
+            Console.WriteLine(TAB + "Average Price:".PadRight(20) + average.ToString("C2").PadLeft(15));
 
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
     }
