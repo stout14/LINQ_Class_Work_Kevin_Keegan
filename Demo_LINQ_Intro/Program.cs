@@ -11,10 +11,14 @@ namespace Demo_LINQ_Intro
     {
         static void Main(string[] args)
         {
-            List<int> listOfNumbers = new List<int>()
+            List<int> listOfNumbers = new List<int>();
+
+            Random myRandom = new Random();
+
+            for (int i = 0; i < 20; i++)
             {
-                1,2,3,32,27,6,9,13,7,17,20,21
-            };
+                listOfNumbers.Add(myRandom.Next(1, 100));
+            }
 
             Console.Write("Evens by foreach: ");
             foreach (int n in GetEvenNumbers(listOfNumbers))
@@ -54,13 +58,15 @@ namespace Demo_LINQ_Intro
         {
             //List<int> listOfEvens = new List<int>();
 
-            var listOfEvens = (
-                from n in listOfNumbers
-                where n % 2 == 0
-                orderby n
-                select n
-                )
-                .ToList();
+            //var listOfEvens = (
+            //    from n in listOfNumbers
+            //    where n % 2 == 0
+            //    orderby n
+            //    select n
+            //    )
+            //    .ToList();
+
+            var listOfEvens = listOfNumbers.Where(n => n % 2 == 0).OrderBy(n => n).ToList();
 
             return listOfEvens;
         }
