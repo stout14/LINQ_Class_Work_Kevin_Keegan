@@ -67,6 +67,10 @@ namespace Demo_LINQ_ClassOfProducts
             }
         }
 
+        /// <summary>
+        /// read all products from an AML file and return as a list of Product
+        /// </summary>
+        /// <returns>List of Product</returns>
         private static List<Product> ReadAllProductsFromXml()
         {
             string dataPath = @"Data\Products.xml";
