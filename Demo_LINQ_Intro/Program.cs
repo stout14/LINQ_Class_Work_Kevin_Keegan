@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Linq;
 
 namespace Demo_LINQ_Intro
 {
@@ -56,17 +53,15 @@ namespace Demo_LINQ_Intro
 
         public static List<int> GetEvenNumbersLINQ(List<int> listOfNumbers)
         {
-            //List<int> listOfEvens = new List<int>();
+            var listOfEvens = (
+                from n in listOfNumbers
+                where n % 2 == 0
+                orderby n
+                select n
+                )
+                .ToList();
 
-            //var listOfEvens = (
-            //    from n in listOfNumbers
-            //    where n % 2 == 0
-            //    orderby n
-            //    select n
-            //    )
-            //    .ToList();
-
-            var listOfEvens = listOfNumbers.Where(n => n % 2 == 0).OrderBy(n => n).ToList();
+            //var listOfEvens = listOfNumbers.Where(n => n % 2 == 0).OrderBy(n => n).ToList();
 
             return listOfEvens;
         }

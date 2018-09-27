@@ -42,9 +42,7 @@ namespace Demo_LINQ_ClassOfProducts
 
             // Query: List all products with names that start with "S" and calculate the average of the units in stock.
 
-            // Query: Student Choice
-
-            // Query: Student Choice
+            // Query: Student Choice - Minimum of one per team member
         }
 
 
