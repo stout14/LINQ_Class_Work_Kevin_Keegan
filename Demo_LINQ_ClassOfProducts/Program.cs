@@ -32,15 +32,15 @@ namespace Demo_LINQ_ClassOfProducts
             // Write the following methods
             //
 
-            // Query: List the names and units of all products with less than 10 units in stock. Order by units.
+            // OrderByUnits(): List the names and units of all products with less than 10 units in stock. Order by units.
 
-            // Query: List all products with a unit price less than $10. Order by price.
+            // OrderByPrice(): List all products with a unit price less than $10. Order by price.
 
-            // Query: List the most expensive Seafood. Consider there may be more than one.
+            // FindExpensive(): List the most expensive Seafood. Consider there may be more than one.
 
-            // Query: List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
+            // OrderByTotalValue(): List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
 
-            // Query: List all products with names that start with "S" and calculate the average of the units in stock.
+            // OrderByName(): List all products with names that start with "S" and calculate the average of the units in stock.
 
             // Query: Student Choice - Minimum of one per team member
         }
@@ -48,7 +48,7 @@ namespace Demo_LINQ_ClassOfProducts
 
         /// <summary>
         /// read all products from an XML file and return as a list of Product
-        /// in decending order by price
+        /// in descending order by price
         /// </summary>
         /// <returns>List of Product</returns>
         private static List<Product> ReadAllProductsFromXml()
