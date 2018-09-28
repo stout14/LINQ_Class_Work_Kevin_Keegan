@@ -34,6 +34,8 @@ namespace Demo_LINQ_ClassOfProducts
 
             FindExpensive(productList);
 
+            OrderByTotalValue(productList);
+
         }
 
         //
@@ -54,12 +56,12 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts = products.Where(p => p.UnitsInStock <= 10).OrderByDescending(p => p.UnitsInStock);
 
-            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadRight(20) + "Number Units".PadLeft(3));
-            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadRight(20) + "----------".PadLeft(3));
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Unit Price".PadRight(20) + "Number Units".PadLeft(3));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(35) + "----------".PadRight(20) + "----------".PadLeft(3));
 
             foreach (Product product in sortedProducts)
             {
-                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadRight(20) + product.UnitsInStock.ToString().PadLeft(3));
+                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(35) + product.UnitPrice.ToString("C2").PadRight(20) + product.UnitsInStock.ToString().PadLeft(3));
             }
 
             Console.WriteLine();
@@ -82,12 +84,12 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts = products.Where(p => p.UnitPrice <= 10).OrderByDescending(p => p.UnitPrice);
 
-            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
-            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Unit Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(35) + "----------".PadLeft(10));
 
             foreach (Product product in sortedProducts)
             {
-                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(25) + product.UnitPrice.ToString("C2").PadLeft(10));
+                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(35) + product.UnitPrice.ToString("C2").PadLeft(10));
             }
 
             Console.WriteLine();
@@ -128,11 +130,37 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
-            // OrderByTotalValue(): List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
 
-            // OrderByName(): List all products with names that start with "S" and calculate the average of the units in stock.
+        // OrderByTotalValue(): List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
+        private static void OrderByTotalValue(List<Product> products)
+        {
+            string TAB = "   ";
 
-            // Query: Student Choice - Minimum of one per team member
+            Console.Clear();
+            Console.WriteLine(TAB + "List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.");
+            Console.WriteLine();
+
+
+            //
+            // lambda syntax
+            //
+            var sortedProducts = products.Where(p => p.Category == "Condiments").OrderByDescending(p => p.UnitPrice * p.UnitsInStock);
+
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Total Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(35) + "----------".PadLeft(10));
+
+            foreach (Product product in sortedProducts)
+            {
+                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(35) + (product.UnitPrice * product.UnitsInStock).ToString("c2").PadLeft(10));
+            }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
+        // OrderByName(): List all products with names that start with "S" and calculate the average of the units in stock.
+
+        // Query: Student Choice - Minimum of one per team member
         
 
 
