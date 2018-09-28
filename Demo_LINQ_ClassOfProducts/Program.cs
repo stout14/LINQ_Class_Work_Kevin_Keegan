@@ -32,6 +32,8 @@ namespace Demo_LINQ_ClassOfProducts
 
             OrderByPrice(productList);
 
+            FindExpensive(productList);
+
         }
 
         //
@@ -92,8 +94,40 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
-            // FindExpensive(): List the most expensive Seafood. Consider there may be more than one.
 
+        // FindExpensive(): List the most expensive Seafood. Consider there may be more than one.
+        private static void FindExpensive(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List the most expensive Seafood. Consider there may be more than one");
+            Console.WriteLine();
+
+            var query = from product in products
+                        group product by product.Category into cat                        
+                        select new
+                        {
+                            cat = cat.Key,                            
+                            heighestPrice = cat.Max(x => x.UnitPrice)
+                        };
+    
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Unit Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "----------".PadLeft(10)); 
+
+            foreach (var product in query)
+	            { 
+                    if (product.cat == "Seafood")
+	                {
+                        Console.WriteLine(TAB + product.cat.PadRight(15) + TAB + product.heighestPrice.ToString("c2"));
+	                }
+
+	            };        	
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
             // OrderByTotalValue(): List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.
 
             // OrderByName(): List all products with names that start with "S" and calculate the average of the units in stock.
@@ -139,19 +173,11 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine(TAB + "List all beverages and sort by the unit price.");
             Console.WriteLine();
 
-            //
-            // query syntax
-            //
-            var sortedProducts =
-                from product in products
-                where product.Category == "Beverages"
-                orderby product.UnitPrice descending
-                select product;
 
             //
             // lambda syntax
             //
-            //var sortedProducts = products.Where(p => p.Category == "Beverages").OrderByDescending(p => p.UnitPrice);
+            var sortedProducts = products.Where(p => p.Category == "Beverages").OrderByDescending(p => p.UnitPrice);
 
             Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(25) + "Unit Price".PadLeft(10));
             Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(25) + "----------".PadLeft(10));
