@@ -38,6 +38,8 @@ namespace Demo_LINQ_ClassOfProducts
 
             OrderByName(productList);
 
+            AveragePricePerCategory(productList);
+
         }
 
         //
@@ -174,7 +176,7 @@ namespace Demo_LINQ_ClassOfProducts
             //
             var sortedProducts = products.Where(p => p.ProductName.StartsWith("S")).OrderByDescending(p => p.Category);
 
-            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Average Units ".PadLeft(10));
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Units In Stock".PadLeft(10));
             Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(35) + "--------------".PadLeft(10));
 
             int totalUnitsInStock = 0;
@@ -199,7 +201,34 @@ namespace Demo_LINQ_ClassOfProducts
         }
 
         // Query: Student Choice - Minimum of one per team member
-        
+        private static void AveragePricePerCategory(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "calculate the average price for every category.");
+            Console.WriteLine();
+
+            var query = from product in products
+            group product by product.Category into cat                        
+            select new
+            {
+                cat = cat.Key,                            
+                averagePrice = cat.Average(x => x.UnitPrice)
+            };
+
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Average Price".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "----------".PadLeft(10)); 
+
+            foreach (var product in query)
+	            { 
+                        Console.WriteLine(TAB + product.cat.PadRight(15) + TAB + product.averagePrice.ToString("c2")); 
+	            }; 
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
 
 
         /// <summary>
