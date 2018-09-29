@@ -17,6 +17,9 @@ namespace Demo_LINQ_ClassOfProducts
     {
         static void Main(string[] args)
         {
+
+            Console.WindowWidth = 150;
+            
             //
             // write all data files to Data folder
             //
@@ -39,6 +42,8 @@ namespace Demo_LINQ_ClassOfProducts
             OrderByName(productList);
 
             AveragePricePerCategory(productList);
+
+            FullList(productList);
 
         }
 
@@ -201,12 +206,14 @@ namespace Demo_LINQ_ClassOfProducts
         }
 
         // Query: Student Choice - Minimum of one per team member
+
+        // Average price per category
         private static void AveragePricePerCategory(List<Product> products)
         {
             string TAB = "   ";
 
             Console.Clear();
-            Console.WriteLine(TAB + "calculate the average price for every category.");
+            Console.WriteLine(TAB + "Calculate the average price for every category.");
             Console.WriteLine();
 
             var query = from product in products
@@ -228,6 +235,41 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine();
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
+        }
+
+        // Anonymous Type printing out the full list      
+        private static void FullList(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "Anonymous return type printing out full list");
+            Console.WriteLine();
+
+            var query = from product in products
+                        select new
+                        {
+                            ProductID = product.ProductID,
+                            Category = product.Category,
+                            ProductName = product.ProductName,
+                            UnitPrice = product.UnitPrice,
+                            UnitsInStock = product.UnitsInStock
+                        };
+
+            Console.WriteLine(TAB + "ProductID".PadRight(15) + "Category".PadRight(15) + "Product Name".PadRight(35) + "Unit Price".PadRight(15) + "Units In Stock".PadLeft(10));
+            Console.WriteLine(TAB + "---------".PadRight(15) + "--------".PadRight(15) + "------------".PadRight(35) + "----------".PadRight(15) + "--------------".PadLeft(10));
+
+            foreach (var product in query)
+	        {
+                Console.WriteLine(TAB + product.ProductID.ToString().PadRight(15) + product.Category.PadRight(15) + product.ProductName.PadRight(35) + product.UnitPrice.ToString("c2").PadRight(10) + product.UnitsInStock.ToString().PadLeft(10));
+	        }
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Scroll up to see table headings");
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+
         }
 
 
