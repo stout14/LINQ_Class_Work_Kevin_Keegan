@@ -36,6 +36,8 @@ namespace Demo_LINQ_ClassOfProducts
 
             OrderByTotalValue(productList);
 
+            OrderByName(productList);
+
         }
 
         //
@@ -140,7 +142,6 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine(TAB + "List all condiments with total value in stock (UnitPrice * UnitsInStock). Sort by total value.");
             Console.WriteLine();
 
-
             //
             // lambda syntax
             //
@@ -158,7 +159,44 @@ namespace Demo_LINQ_ClassOfProducts
             Console.WriteLine(TAB + "Press any key to continue.");
             Console.ReadKey();
         }
+
         // OrderByName(): List all products with names that start with "S" and calculate the average of the units in stock.
+        private static void OrderByName(List<Product> products)
+        {
+            string TAB = "   ";
+
+            Console.Clear();
+            Console.WriteLine(TAB + "List all products with names that start with \"S\" and calculate the average of the units in stock.");
+            Console.WriteLine();
+
+            //
+            // lambda syntax
+            //
+            var sortedProducts = products.Where(p => p.ProductName.StartsWith("S")).OrderByDescending(p => p.Category);
+
+            Console.WriteLine(TAB + "Category".PadRight(15) + "Product Name".PadRight(35) + "Average Units ".PadLeft(10));
+            Console.WriteLine(TAB + "--------".PadRight(15) + "------------".PadRight(35) + "--------------".PadLeft(10));
+
+            int totalUnitsInStock = 0;
+            int totalNumberOfProduct = 0;
+            foreach (Product product in sortedProducts)
+	        {                
+                totalUnitsInStock = product.UnitsInStock + totalUnitsInStock;
+                totalNumberOfProduct = totalNumberOfProduct + 1;                 
+	        }
+
+            foreach (Product product in sortedProducts)
+            {
+                Console.WriteLine(TAB + product.Category.PadRight(15) + product.ProductName.PadRight(35) + product.UnitsInStock.ToString().PadLeft(10));
+            }
+
+            Console.WriteLine(); 
+            Console.WriteLine(TAB + "Average units in stock = " + (totalUnitsInStock / totalNumberOfProduct));
+
+            Console.WriteLine();
+            Console.WriteLine(TAB + "Press any key to continue.");
+            Console.ReadKey();
+        }
 
         // Query: Student Choice - Minimum of one per team member
         
